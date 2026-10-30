@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import CardVeiculo from "../components/CardVeiculo";
 import Carrossel from "../components/Carrossel";
@@ -18,13 +19,17 @@ const sobreposicao = {
   escuro: "linear-gradient(to right, rgba(10,10,10,.95), rgba(10,10,10,.5))",
 };
 
-// Se não existir a imagem em /public/banners, aparece só o degradê
+// Fundo listrado: aparece quando a imagem do banner não existe
+const padroes = {
+  vermelho: "repeating-linear-gradient(135deg, #b30f0f 0 28px, #a50d0d 28px 56px)",
+  escuro: "repeating-linear-gradient(135deg, #131313 0 28px, #0d0d0d 28px 56px)",
+};
+
 function Slide({ titulo, texto, cta, imagem, variante }: SlideProps) {
   return (
     <div
-      className="bg-marca-escura"
       style={{
-        backgroundImage: `${sobreposicao[variante]}, url('${imagem}')`,
+        backgroundImage: `${sobreposicao[variante]}, url('${imagem}'), ${padroes[variante]}`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -53,7 +58,7 @@ const slides = [
     titulo="Seu próximo seminovo está aqui."
     texto="Carros selecionados, com procedência e preço justo."
     cta={{ to: "/catalogo", rotulo: "Ver catálogo" }}
-    imagem="/banners/1.jpg"
+    imagem="/banners/banner1.webp"
     variante="vermelho"
   />,
   <Slide
@@ -61,7 +66,7 @@ const slides = [
     titulo="Financiamento facilitado."
     texto="Escolha o carro, simule e saia dirigindo."
     cta={{ to: "/agendar", rotulo: "Agende uma visita" }}
-    imagem="/banners/2.jpg"
+    imagem="/banners/banner2.webp"
     variante="escuro"
   />,
   <Slide
@@ -69,7 +74,7 @@ const slides = [
     titulo="Aceitamos seu usado na troca."
     texto="Avaliação rápida do seu carro como parte do pagamento."
     cta={{ to: "/agendar", rotulo: "Agendar avaliação" }}
-    imagem="/banners/3.jpg"
+    imagem="/banners/banner3.webp"
     variante="vermelho"
   />,
 ];
@@ -82,33 +87,74 @@ const rotulosCategoria: Record<Categoria, string> = {
 };
 
 const imagensCategoria: Record<Categoria, string> = {
-  Hatch: "/categorias/hatch.jpg",
-  Sedan: "/categorias/sedan.jpg",
-  SUV: "/categorias/suv.jpg",
-  Utilitário: "/categorias/utilitario.jpg",
+  Hatch: "/categorias/CatHatch.jpeg",
+  Sedan: "/categorias/CatSedan.jpeg",
+  SUV: "/categorias/CatSuv.jpeg",
+  Utilitário: "/categorias/CatUtil.jpeg",
 };
+
+function Icone({ children }: { children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-6 w-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
 
 const beneficios = [
   {
-    icone: "🔍",
+    icone: (
+      <Icone>
+        <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" />
+        <path d="M9 12l2 2 4-4" />
+      </Icone>
+    ),
     titulo: "Procedência verificada",
     texto: "Veículos avaliados e com histórico conferido antes de chegar ao pátio.",
   },
   {
-    icone: "💳",
+    icone: (
+      <Icone>
+        <rect x="3" y="6" width="18" height="12" rx="2" />
+        <path d="M3 10h18M7 15h3" />
+      </Icone>
+    ),
     titulo: "Financiamento facilitado",
     texto: "Simulação rápida e condições para caber no seu orçamento.",
   },
   {
-    icone: "🔄",
+    icone: (
+      <Icone>
+        <path d="M17 4l3 3-3 3M20 7H8a4 4 0 0 0-4 4M7 20l-3-3 3-3M4 17h12a4 4 0 0 0 4-4" />
+      </Icone>
+    ),
     titulo: "Aceitamos seu usado",
     texto: "Avaliação do seu carro como parte do pagamento.",
   },
   {
-    icone: "🤝",
+    icone: (
+      <Icone>
+        <path d="M4 5h16v11H9l-5 4V5z" />
+      </Icone>
+    ),
     titulo: "Atendimento próximo",
     texto: "Uma equipe pronta para tirar dúvidas, do primeiro contato à entrega.",
   },
+];
+
+const passos = [
+  { n: 1, titulo: "Escolha", texto: "Navegue pelo catálogo e filtre por marca, modelo, cor e combustível." },
+  { n: 2, titulo: "Agende", texto: "Reserve o melhor dia e horário para conhecer o carro de perto." },
+  { n: 3, titulo: "Visite", texto: "Faça o test drive, tire suas dúvidas e feche negócio com segurança." },
 ];
 
 export default function Home() {
@@ -121,7 +167,7 @@ export default function Home() {
       <Carrossel slides={slides} />
 
       {/* Categorias */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
+      <section className="mx-auto max-w-6xl px-4 py-12" aria-label="Categorias">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categorias.map((c) => (
             <div
@@ -131,6 +177,7 @@ export default function Home() {
               <FotoVeiculo
                 src={imagensCategoria[c]}
                 alt={rotulosCategoria[c]}
+                legenda={false}
                 className="absolute inset-0 -z-10 h-full w-full"
               />
               <div className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
@@ -177,15 +224,31 @@ export default function Home() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {beneficios.map((b) => (
               <div key={b.titulo} className="rounded-xl border border-borda bg-fundo p-5">
-                <p className="text-3xl" aria-hidden="true">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-marca/15 text-marca-clara">
                   {b.icone}
-                </p>
-                <h3 className="mt-3 font-semibold">{b.titulo}</h3>
+                </span>
+                <h3 className="mt-4 font-semibold">{b.titulo}</h3>
                 <p className="mt-1 text-sm text-zinc-400">{b.texto}</p>
               </div>
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Como funciona */}
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <h2 className="mb-10 text-center text-2xl font-bold md:text-3xl">Como funciona</h2>
+        <ol className="grid gap-8 md:grid-cols-3">
+          {passos.map((p) => (
+            <li key={p.n} className="text-center">
+              <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-marca text-2xl font-black">
+                {p.n}
+              </span>
+              <h3 className="mt-4 text-lg font-bold">{p.titulo}</h3>
+              <p className="mx-auto mt-1 max-w-xs text-sm text-zinc-400">{p.texto}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* Chamada final */}

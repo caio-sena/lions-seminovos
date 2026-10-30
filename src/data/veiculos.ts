@@ -8,6 +8,7 @@ export type Veiculo = {
   versao: string;
   categoria: Categoria;
   ano: number;
+  anoModelo: number;
   km: number;
   preco: number;
   cambio: "Manual" | "Automático";
@@ -26,13 +27,14 @@ export const veiculos: Veiculo[] = [
     versao: "XEi 2.0",
     categoria: "Sedan",
     ano: 2021,
+    anoModelo: 2022,
     km: 48000,
     preco: 124900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Prata",
     destaque: true,
-    imagem: "/carros/corolla.jpg",
+    imagem: "/carros/CarroCorolla.webp",
   },
   {
     id: "civic-touring-2020",
@@ -41,12 +43,13 @@ export const veiculos: Veiculo[] = [
     versao: "Touring 1.5 Turbo",
     categoria: "Sedan",
     ano: 2020,
+    anoModelo: 2020,
     km: 62300,
     preco: 119900,
     cambio: "Automático",
     combustivel: "Gasolina",
     cor: "Preto",
-    imagem: "/carros/civic.jpg",
+    imagem: "/carros/CarroCivic.jpg",
   },
   {
     id: "compass-longitude-2022",
@@ -55,13 +58,14 @@ export const veiculos: Veiculo[] = [
     versao: "Longitude 1.3 Turbo",
     categoria: "SUV",
     ano: 2022,
+    anoModelo: 2022,
     km: 35100,
     preco: 139900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Branco",
     destaque: true,
-    imagem: "/carros/compass.jpg",
+    imagem: "/carros/CarroCompass.webp",
   },
   {
     id: "tcross-highline-2021",
@@ -70,12 +74,13 @@ export const veiculos: Veiculo[] = [
     versao: "Highline 1.4 TSI",
     categoria: "SUV",
     ano: 2021,
+    anoModelo: 2021,
     km: 44800,
     preco: 109900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Cinza",
-    imagem: "/carros/tcross.jpg",
+    imagem: "/carros/CarroTCross.webp",
   },
   {
     id: "onix-premier-2022",
@@ -84,13 +89,14 @@ export const veiculos: Veiculo[] = [
     versao: "Premier 1.0 Turbo",
     categoria: "Hatch",
     ano: 2022,
+    anoModelo: 2023,
     km: 29700,
     preco: 79900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Vermelho",
     destaque: true,
-    imagem: "/carros/onix.jpg",
+    imagem: "/carros/CarroOnix.webp",
   },
   {
     id: "hb20-evolution-2021",
@@ -99,12 +105,13 @@ export const veiculos: Veiculo[] = [
     versao: "Evolution 1.0",
     categoria: "Hatch",
     ano: 2021,
+    anoModelo: 2022,
     km: 41000,
     preco: 64900,
     cambio: "Manual",
     combustivel: "Flex",
     cor: "Branco",
-    imagem: "/carros/hb20.jpg",
+    imagem: "/carros/CarroHB20.webp",
   },
   {
     id: "toro-freedom-2020",
@@ -113,12 +120,13 @@ export const veiculos: Veiculo[] = [
     versao: "Freedom 1.8",
     categoria: "Utilitário",
     ano: 2020,
+    anoModelo: 2020,
     km: 71500,
     preco: 99900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Cinza",
-    imagem: "/carros/toro.jpg",
+    imagem: "/carros/CarroToro.webp",
   },
   {
     id: "hilux-srv-2019",
@@ -127,12 +135,13 @@ export const veiculos: Veiculo[] = [
     versao: "SRV 2.8 Diesel",
     categoria: "Utilitário",
     ano: 2019,
+    anoModelo: 2019,
     km: 88200,
     preco: 214900,
     cambio: "Automático",
     combustivel: "Diesel",
     cor: "Preto",
-    imagem: "/carros/hilux.jpg",
+    imagem: "/carros/CarroHilux.webp",
   },
   {
     id: "kwid-zen-2022",
@@ -141,12 +150,13 @@ export const veiculos: Veiculo[] = [
     versao: "Zen 1.0",
     categoria: "Hatch",
     ano: 2022,
+    anoModelo: 2023,
     km: 23400,
     preco: 52900,
     cambio: "Manual",
     combustivel: "Flex",
     cor: "Branco",
-    imagem: "/carros/kwid.jpg",
+    imagem: "/carros/CarroKwid.webp",
   },
   {
     id: "polo-highline-2021",
@@ -155,20 +165,17 @@ export const veiculos: Veiculo[] = [
     versao: "Highline 200 TSI",
     categoria: "Hatch",
     ano: 2021,
+    anoModelo: 2022,
     km: 38900,
     preco: 89900,
     cambio: "Automático",
     combustivel: "Flex",
     cor: "Azul",
-    imagem: "/carros/polo.jpg",
+    imagem: "/carros/CarroPolo.webp",
   },
 ];
 
 export const formatarPreco = (valor: number) =>
-  valor.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 0,
-  });
+  valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 export const formatarKm = (km: number) => `${km.toLocaleString("pt-BR")} km`;
